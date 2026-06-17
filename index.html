@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)file:///C:/Users/cowgi/Downloads/service-dashboard-live%20(4).html -->
+<html lang="en" style="--cycle-dur: 8s;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VW Service Dashboard</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f4f8;
+    --surface: #ffffff;
+    --surface2: #eaecf2;
+    --border: #d4d8e8;
+    --border-dark: #b8bdd4;
+    --ink: #001e50;
+    --ink2: #1a3a7a;
+    --ink3: #6a7aaa;
+    --accent: #001e50;
+    --accent-light: #dde4f5;
+    --green: #1a6e3c;
+    --green-light: #e6f4ec;
+    --red: #c0392b;
+    --red-light: #fdecea;
+    --amber: #7a5a00;
+    --amber-light: #fdf3d0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: #001e50;
+    color: #ffffff;
+    padding: 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #fff;
+  }
+
+  .brand-sep { color: #555; font-weight: 300; }
+
+  .dept-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .date-display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .edit-toggle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid #444;
+    color: #ccc;
+    border-radius: 4px;
+    padding: 6px 14px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: all 0.15s;
+  }
+
+  .edit-toggle:hover, .edit-toggle.active {
+    background: #fff;
+    color: var(--ink);
+    border-color: #fff;
+  }
+
+  /* ── TOP STRIP ── */
+  .top-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 36px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .strip-stat {
+    flex: 1;
+    padding: 0 28px;
+    border-right: 1px solid var(--border);
+  }
+
+  .strip-stat:first-child { padding-left: 0; }
+  .strip-stat:last-child { border-right: none; }
+
+  .strip-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 4px;
+  }
+
+  .strip-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .strip-value.accent { color: var(--accent); }
+  .strip-value.green { color: var(--green); }
+  .strip-value.amber { color: var(--amber); }
+
+  .strip-sub {
+    font-size: 11px;
+    color: var(--ink3);
+    margin-top: 3px;
+  }
+
+  /* ── CSI SECTION ── */
+  .csi-section {
+    padding: 24px 36px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* ── PANEL ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .panel-head {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface2);
+  }
+
+  .panel-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+
+  .panel-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--ink3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── STORE SURVEY ── */
+  .store-csi {
+    padding: 20px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .csi-score-big {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .csi-label-big {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  .csi-bar-wrap {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .csi-bar-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .csi-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.8s ease;
+  }
+
+  /* Benchmark row under survey card */
+  .benchmark-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .benchmark-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .benchmark-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    text-align: center;
+  }
+
+  .benchmark-score {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink2);
+    line-height: 1;
+  }
+
+  .benchmark-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .benchmark-rank-input {
+    width: 100%;
+    height: 26px;
+    margin-top: 4px;
+    border: 1px solid var(--border-dark);
+    border-radius: 3px;
+    padding: 0 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    background: var(--surface2);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .benchmark-rank-input:focus { border-color: var(--accent); background: var(--surface); }
+  .benchmark-rank-input::placeholder { color: var(--ink3); font-size: 10px; }
+
+  .benchmark-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+    display: none; /* handled by grid gap */
+  }
+
+  .csi-range {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink3);
+    margin-top: 4px;
+  }
+
+  /* ── ADVISOR TABLE ── */
+  .adv-table-wrap { overflow: hidden; }
+
+  table.adv {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table.adv thead th {
+    padding: 0 14px 0;
+    height: 36px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  table.adv thead th:first-child { text-align: left; }
+
+  table.adv tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  table.adv tbody tr:last-child { border-bottom: none; }
+  table.adv tbody tr:hover { background: var(--surface2); }
+
+  table.adv tbody td {
+    padding: 0 14px;
+    height: 52px;
+    vertical-align: middle;
+  }
+
+  .adv-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .adv-init {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .adv-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .adv-role {
+    font-size: 10px;
+    color: var(--ink3);
+  }
+
+  td.num {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  td.num.good { color: var(--green); }
+  td.num.warn { color: var(--amber); }
+  td.num.bad  { color: var(--red); }
+
+  /* CSI pill in table */
+  .csi-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .csi-pill.high { background: var(--green-light); color: var(--green); }
+  .csi-pill.mid  { background: var(--amber-light); color: var(--amber); }
+  .csi-pill.low  { background: var(--red-light);   color: var(--red);   }
+
+  /* ── APPT SECTION ── */
+  .appt-section {
+    padding: 0 36px 24px;
+  }
+
+  .appt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .appt-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 14px 14px 10px;
+  }
+
+  .appt-adv { font-size: 12px; font-weight: 600; color: var(--ink2); margin-bottom: 8px; }
+
+  .appt-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .appt-meta { font-size: 10px; color: var(--ink3); margin-top: 4px; letter-spacing: 0.04em; }
+
+  .appt-bar-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .appt-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--accent);
+    transition: width 0.8s ease;
+  }
+
+  /* ── EDIT DRAWER ── */
+  .edit-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    backdrop-filter: blur(2px);
+  }
+
+  .edit-overlay.open { display: flex; align-items: flex-start; justify-content: flex-end; }
+
+  .edit-drawer {
+    width: 500px;
+    height: 100vh;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drawer-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .drawer-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+
+  .drawer-close {
+    background: none;
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--ink3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .drawer-close:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .drawer-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 24px; }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .field-group-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink2);
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .field-input {
+    flex: 1;
+    height: 34px;
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    padding: 0 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--surface);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(26,58,143,0.1); }
+
+  .advisor-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .advisor-block-head {
+    padding: 10px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .advisor-block-fields {
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .mini-field { display: flex; flex-direction: column; gap: 4px; }
+
+  .mini-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  .mini-input {
+    height: 30px;
+    border: 1px solid var(--border-dark);
+    border-radius: 3px;
+    padding: 0 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+
+  .mini-input:focus { border-color: var(--accent); }
+
+  .drawer-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-save {
+    flex: 1;
+    height: 38px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: opacity 0.15s;
+  }
+
+  .btn-save:hover { opacity: 0.88; }
+
+  .btn-cancel {
+    height: 38px;
+    padding: 0 20px;
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-cancel:hover { background: var(--border); }
+
+  /* Section divider */
+  .section-divider {
+    padding: 0 36px;
+    margin-bottom: 4px;
+  }
+
+  .section-divider-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-name {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    white-space: nowrap;
+  }
+
+  /* empty state */
+  .empty-note {
+    padding: 28px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink3);
+  }
+
+  /* totals row */
+  tr.totals-row td {
+    background: var(--surface2);
+    font-weight: 600;
+    border-top: 2px solid var(--border-dark);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── METRIC TABS ── */
+  .metric-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 16px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+  .metric-tab:hover { color: var(--ink2); }
+  .metric-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    position: relative;
+  }
+
+  /* Auto-cycle progress bar under the active tab */
+  .metric-tab.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    opacity: 0.35;
+    transform-origin: left;
+    animation: tabProgress var(--cycle-dur, 8s) linear;
+  }
+
+  .metric-tab.no-cycle.active::after { display: none; }
+
+  @keyframes tabProgress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ── LEADERBOARD BARS ── */
+  .lb-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row:hover { background: var(--surface2); }
+
+  .lb-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink3);
+    width: 22px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .lb-rank.gold   { color: #b8860b; }
+  .lb-rank.silver { color: #808080; }
+  .lb-rank.bronze { color: #8b5e3c; }
+
+  .lb-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .lb-avatar.rank-1 { background: rgba(184,134,11,0.12); color: #b8860b; }
+  .lb-avatar.rank-2 { background: rgba(128,128,128,0.12); color: #606060; }
+  .lb-avatar.rank-3 { background: rgba(139,94,60,0.12); color: #8b5e3c; }
+
+  .lb-info {
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .lb-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lb-sub {
+    font-size: 10px;
+    color: var(--ink3);
+    margin-top: 1px;
+  }
+
+  .lb-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lb-bar-track {
+    height: 10px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .lb-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.9s cubic-bezier(.4,0,.2,1);
+    position: relative;
+  }
+
+  .lb-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--ink3);
+  }
+
+  .lb-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    width: 90px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .lb-delta {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    width: 58px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .lb-delta.lead  { background: var(--green-light);  color: var(--green); }
+  .lb-delta.trail { background: var(--surface2); color: var(--ink3); }
+
+  .lb-totals-strip {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .lb-total-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .lb-total-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  .lb-total-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <img src="data:image/png;base64,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" alt="Volkswagen" style="height:38px; width:38px; object-fit:contain; flex-shrink:0;">
+    <div style="display:flex; flex-direction:column; justify-content:center;">
+      <div class="brand">Service <span class="brand-sep">/</span> Fixed Ops</div>
+      <div class="dept-label">Daily Performance Dashboard</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div id="sync-status" style="font-family:&#39;IBM Plex Mono&#39;,monospace; font-size:11px; color:#aaa; display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--ink3);"></span> Manual mode</div>
+    <div class="date-display" id="live-date">Wed, Jun 17, 2026</div>
+    <button class="edit-toggle" id="syncBtn" onclick="loadFromSheet(false)" style="display:none;">⟳ Sync Now</button>
+    <button class="edit-toggle" id="editBtn" onclick="openDrawer()">↗ Enter Today's Data</button>
+  </div>
+</header>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <div class="strip-stat">
+    <div class="strip-label">Survey Score</div>
+    <div class="strip-value accent" id="s-store-csi">—</div>
+    <div class="strip-sub">Overall satisfaction</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-label">Today's Appointments</div>
+    <div class="strip-value" id="s-total-appts">—</div>
+    <div class="strip-sub">Across all advisors</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-label">Yesterday's Sales</div>
+    <div class="strip-value green" id="s-total-sales">—</div>
+    <div class="strip-sub">All advisors combined</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-label">Avg ELR</div>
+    <div class="strip-value" id="s-avg-elr">—</div>
+    <div class="strip-sub">Effective labor rate</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-label">Total Discounts</div>
+    <div class="strip-value amber" id="s-total-disc">—</div>
+    <div class="strip-sub">All advisors combined</div>
+  </div>
+  <div class="strip-stat">
+    <div class="strip-label">Avg Hrs / RO</div>
+    <div class="strip-value" id="s-avg-hpro">—</div>
+    <div class="strip-sub">Store average</div>
+  </div>
+</div>
+
+<!-- SURVEY SECTION -->
+<div class="csi-section">
+
+  <!-- Store Survey card -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Store Satisfaction Survey Score</div>
+      <div class="panel-tag">Survey</div>
+    </div>
+    <div class="store-csi">
+      <div class="csi-label-big">Overall Score</div>
+      <div class="csi-score-big" id="csi-display" style="color: var(--accent)">—</div>
+      <div class="csi-label-big">/ 1000</div>
+      <div class="csi-bar-wrap">
+        <div class="csi-bar-track">
+          <div class="csi-bar-fill" id="csi-bar" style="width:0%; background: var(--accent)"></div>
+        </div>
+        <div class="csi-range"><span>0</span><span>1000</span></div>
+      </div>
+      <!-- Benchmark blocks -->
+      <div class="benchmark-row">
+        <div class="benchmark-block">
+          <div class="benchmark-label">National Average</div>
+          <div class="benchmark-score" id="bench-national-display" style="color: var(--ink2);">—</div>
+          <div class="benchmark-rank" id="bench-national-rank-display"></div>
+          <input class="benchmark-rank-input" id="bench-national-rank" type="text" placeholder="Our rank (e.g. 4/15)" oninput="updateRankDisplay(&#39;national&#39;)">
+        </div>
+        <div class="benchmark-block" style="border-left:1px solid var(--border); padding-left:12px;">
+          <div class="benchmark-label">Regional Average</div>
+          <div class="benchmark-score" id="bench-regional-display" style="color: var(--ink2);">—</div>
+          <div class="benchmark-rank" id="bench-regional-rank-display"></div>
+          <input class="benchmark-rank-input" id="bench-regional-rank" type="text" placeholder="Our rank (e.g. 2/8)" oninput="updateRankDisplay(&#39;regional&#39;)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advisor Survey breakdown -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Advisor Satisfaction Survey Breakdown</div>
+      <div class="panel-tag">Survey source</div>
+    </div>
+    <div id="csi-advisor-rows"><div class="empty-note">Enter today's data to see advisor survey scores.</div></div>
+  </div>
+
+</div>
+
+<!-- MTD ADVISOR LEADERBOARD -->
+<div class="section-divider">
+  <div class="section-divider-inner">
+    <div class="section-name">MTD Sales Performance</div>
+  </div>
+</div>
+
+<div style="padding: 0 36px 24px;">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Advisor Leaderboard — Month to Date</div>
+      <div class="panel-tag">R&amp;R / Manual Entry</div>
+    </div>
+
+    <!-- Metric tabs -->
+    <div style="display:flex; gap:0; border-bottom:1px solid var(--border); padding: 0 18px;">
+      <button class="metric-tab active" onclick="switchTab(&#39;sales&#39;)" id="tab-sales">Sales</button>
+      <button class="metric-tab" onclick="switchTab(&#39;discounts&#39;)" id="tab-discounts">Discounts</button>
+      <button class="metric-tab" onclick="switchTab(&#39;elr&#39;)" id="tab-elr">ELR</button>
+      <button class="metric-tab" onclick="switchTab(&#39;hpro&#39;)" id="tab-hpro">Hrs / RO</button>
+      <button class="metric-tab" onclick="switchTab(&#39;survey&#39;)" id="tab-survey">Survey</button>
+    </div>
+
+    <div id="leaderboard-body" style="padding: 0;"><div class="empty-note">No data yet — click "Enter Today's Data" to get started.</div></div>
+
+    <!-- Summary strip below leaderboard -->
+    <div id="leaderboard-totals" style="display:none; border-top:2px solid var(--border-dark); background:var(--surface2); padding:14px 22px; display:none;">
+    </div>
+  </div>
+</div>
+
+<!-- APPOINTMENT COUNTS -->
+<div class="section-divider">
+  <div class="section-divider-inner">
+    <div class="section-name">Today's Appointments by Advisor</div>
+  </div>
+</div>
+
+<div class="appt-section">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Appointment Count</div>
+      <div class="panel-tag">Xtime</div>
+    </div>
+    <div class="appt-grid" id="appt-grid"><div class="empty-note" style="grid-column:1/-1;">Enter today's data to see appointment counts.</div></div>
+  </div>
+</div>
+
+
+<!-- EDIT DRAWER OVERLAY -->
+<div class="edit-overlay" id="editOverlay" onclick="handleOverlayClick(event)">
+  <div class="edit-drawer" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="drawer-title">Enter Today's Data</div>
+      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="drawer-body">
+
+      <!-- Store Survey -->
+      <div class="field-group">
+        <div class="field-group-title">Store Satisfaction Survey</div>
+        <div class="field-row">
+          <div class="field-label">Store Survey Score</div>
+          <input class="field-input" type="number" id="in-store-csi" placeholder="e.g. 847 (out of 1000)" min="0" max="1000" step="1">
+        </div>
+        <div class="field-row">
+          <div class="field-label">National Average</div>
+          <input class="field-input" type="number" id="in-national-avg" placeholder="e.g. 820 (out of 1000)" min="0" max="1000" step="1">
+        </div>
+        <div class="field-row">
+          <div class="field-label">Regional Average</div>
+          <input class="field-input" type="number" id="in-regional-avg" placeholder="e.g. 835 (out of 1000)" min="0" max="1000" step="1">
+        </div>
+      </div>
+
+      <!-- Advisors -->
+      <div class="field-group">
+        <div class="field-group-title">Advisors</div>
+        <div id="advisor-blocks"></div>
+        <button onclick="addAdvisor()" style="background:none; border:1px dashed var(--border-dark); border-radius:4px; padding:9px; font-size:12px; color:var(--ink3); cursor:pointer; width:100%; transition:all 0.15s;" onmouseover="this.style.borderColor=&#39;var(--accent)&#39;;this.style.color=&#39;var(--accent)&#39;" onmouseout="this.style.borderColor=&#39;var(--border-dark)&#39;;this.style.color=&#39;var(--ink3)&#39;">+ Add Advisor</button>
+      </div>
+
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-cancel" onclick="closeDrawer()">Cancel</button>
+      <button class="btn-save" onclick="saveData()">Save &amp; Update Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Dashboard updated</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// GOOGLE SHEET CONNECTION
+// ══════════════════════════════════════════════════════════════
+// Paste your published-to-web CSV link between the quotes below.
+// (File → Share → Publish to web → choose the tab → CSV → copy link)
+// Leave it as "" to use manual entry only.
+const GOOGLE_SHEET_CSV_URL = "";
+
+// How often (in seconds) the TV should re-pull the sheet. 0 = never.
+const AUTO_REFRESH_SECONDS = 300;
+
+// How many seconds each metric tab shows before auto-advancing on the TV.
+// 0 = don't auto-cycle (tabs only change when clicked).
+const TAB_CYCLE_SECONDS = 8;
+// ══════════════════════════════════════════════════════════════
+
+// ── State ──────────────────────────────────────────────────────
+let state = {
+  storeCsi: null,
+  nationalAvg: null,
+  regionalAvg: null,
+  nationalRank: '',
+  regionalRank: '',
+  advisors: []
+};
+
+// ── Google Sheet fetch ─────────────────────────────────────────
+async function loadFromSheet(isAuto = false) {
+  if (!GOOGLE_SHEET_CSV_URL) return false;
+  setSyncStatus('syncing');
+  try {
+    // Cache-bust so the TV always gets the freshest data
+    const url = GOOGLE_SHEET_CSV_URL + (GOOGLE_SHEET_CSV_URL.includes('?') ? '&' : '?') + 'cb=' + Date.now();
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const csv = await res.text();
+    parseSheetCsv(csv);
+    renderDashboard();
+    setSyncStatus('ok');
+    if (!isAuto) showToast('Synced from Google Sheet ✓');
+    return true;
+  } catch (err) {
+    console.error('Sheet load failed:', err);
+    setSyncStatus('error');
+    if (!isAuto) showToast('Could not reach the sheet — check the link');
+    return false;
+  }
+}
+
+// Parse the CSV. Expected layout (see setup instructions):
+//   Row 1: headers
+//   A "config" section for store-level numbers, then advisor rows.
+// We support a simple, forgiving format:
+//   - Any row whose first cell (lowercased) is one of the known keys
+//     sets a store value: store_score, national_avg, regional_avg,
+//     national_rank, regional_rank
+//   - Otherwise, a row with a name + numbers is treated as an advisor:
+//     name, sales, discounts, elr, hpro, appts, survey
+function parseSheetCsv(csv) {
+  const rows = csv.trim().split(/\r?\n/).map(parseCsvLine);
+  if (rows.length === 0) return;
+
+  const advisors = [];
+  let storeCsi = null, nationalAvg = null, regionalAvg = null, nationalRank = '', regionalRank = '';
+
+  // Detect a header row for advisors (contains "name" + "sales")
+  let headerIdx = -1;
+  let cols = {};
+  rows.forEach((r, i) => {
+    const lower = r.map(c => (c || '').trim().toLowerCase());
+    if (headerIdx === -1 && lower.includes('name') && lower.includes('sales')) {
+      headerIdx = i;
+      lower.forEach((h, idx) => { cols[h] = idx; });
+    }
+  });
+
+  rows.forEach((r, i) => {
+    if (r.length === 0) return;
+    const key = (r[0] || '').trim().toLowerCase();
+
+    // Store-level config rows (key, value)
+    if (key === 'store_score' || key === 'store survey' || key === 'store') {
+      storeCsi = num(r[1]); return;
+    }
+    if (key === 'national_avg' || key === 'national average') { nationalAvg = num(r[1]); return; }
+    if (key === 'regional_avg' || key === 'regional average') { regionalAvg = num(r[1]); return; }
+    if (key === 'national_rank' || key === 'national rank') { nationalRank = (r[1] || '').trim(); return; }
+    if (key === 'regional_rank' || key === 'regional rank') { regionalRank = (r[1] || '').trim(); return; }
+
+    // Skip the header row itself
+    if (i === headerIdx) return;
+    // Skip empty/again-config rows
+    if (!r[0] || key === 'name') return;
+
+    // Advisor row — use detected columns if present, else positional
+    if (headerIdx !== -1 && Object.keys(cols).length) {
+      const name = (r[cols['name']] || '').trim();
+      if (!name) return;
+      advisors.push({
+        name,
+        sales:     num(r[cols['sales']]),
+        discounts: num(r[cols['discounts']]),
+        elr:       num(r[cols['elr']]),
+        hpro:      num(r[cols['hpro']] ?? r[cols['hrs/ro']] ?? r[cols['hours per ro']]),
+        appts:     Math.round(num(r[cols['appts']] ?? r[cols['appointments']])),
+        csi:       num(r[cols['survey']] ?? r[cols['survey score']] ?? r[cols['score']]) || null,
+      });
+    } else {
+      // Positional fallback: name, sales, discounts, elr, hpro, appts, survey
+      const name = (r[0] || '').trim();
+      if (!name) return;
+      advisors.push({
+        name,
+        sales:     num(r[1]),
+        discounts: num(r[2]),
+        elr:       num(r[3]),
+        hpro:      num(r[4]),
+        appts:     Math.round(num(r[5])),
+        csi:       num(r[6]) || null,
+      });
+    }
+  });
+
+  state.storeCsi     = storeCsi;
+  state.nationalAvg  = nationalAvg;
+  state.regionalAvg  = regionalAvg;
+  state.nationalRank = nationalRank;
+  state.regionalRank = regionalRank;
+  state.advisors     = advisors;
+
+  // Reflect ranks into the input boxes + displays
+  const natInput = document.getElementById('bench-national-rank');
+  const regInput = document.getElementById('bench-regional-rank');
+  if (natInput) { natInput.value = nationalRank; updateRankDisplay('national'); }
+  if (regInput) { regInput.value = regionalRank; updateRankDisplay('regional'); }
+}
+
+// Minimal CSV line parser (handles quoted cells with commas)
+function parseCsvLine(line) {
+  const out = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQ) {
+      if (ch === '"' && line[i+1] === '"') { cur += '"'; i++; }
+      else if (ch === '"') { inQ = false; }
+      else cur += ch;
+    } else {
+      if (ch === '"') inQ = true;
+      else if (ch === ',') { out.push(cur); cur = ''; }
+      else cur += ch;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
+function num(v) {
+  if (v == null) return 0;
+  const n = parseFloat(String(v).replace(/[$,\s]/g, ''));
+  return isNaN(n) ? 0 : n;
+}
+
+// ── Sync status indicator ──────────────────────────────────────
+function setSyncStatus(status) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  const map = {
+    syncing: { dot: 'var(--amber)', text: 'Syncing…' },
+    ok:      { dot: 'var(--green)', text: 'Synced' },
+    error:   { dot: 'var(--red)',   text: 'Sync error' },
+    manual:  { dot: 'var(--ink3)',  text: 'Manual mode' },
+  };
+  const s = map[status] || map.manual;
+  el.innerHTML = `<span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:${s.dot};"></span> ${s.text}`;
+}
+
+// ── Date ───────────────────────────────────────────────────────
+const dateEl = document.getElementById('live-date');
+const now = new Date();
+dateEl.textContent = now.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+
+// ── Advisor counter ────────────────────────────────────────────
+let advisorCount = 0;
+
+function addAdvisor(data = {}) {
+  advisorCount++;
+  const id = advisorCount;
+  const block = document.createElement('div');
+  block.className = 'advisor-block';
+  block.dataset.id = id;
+  block.innerHTML = `
+    <div class="advisor-block-head">
+      <div style="flex:1; display:flex; align-items:center; gap:8px;">
+        <div style="width:22px; height:22px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center;">${id}</div>
+        <input style="border:none; background:transparent; font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:600; color:var(--ink2); outline:none; width:180px;" type="text" placeholder="Advisor name" value="${data.name || ''}" data-field="name">
+      </div>
+      <button onclick="removeAdvisor(${id})" style="background:none; border:none; cursor:pointer; font-size:14px; color:var(--ink3); padding:2px 6px; border-radius:3px; transition:color 0.15s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--ink3)'">✕</button>
+    </div>
+    <div class="advisor-block-fields">
+      <div class="mini-field">
+        <div class="mini-label">MTD Sales ($)</div>
+        <input class="mini-input" type="number" placeholder="e.g. 48500" value="${data.sales || ''}" data-field="sales">
+      </div>
+      <div class="mini-field">
+        <div class="mini-label">MTD Discounts ($)</div>
+        <input class="mini-input" type="number" placeholder="e.g. 3200" value="${data.discounts || ''}" data-field="discounts">
+      </div>
+      <div class="mini-field">
+        <div class="mini-label">MTD ELR ($)</div>
+        <input class="mini-input" type="number" placeholder="e.g. 148" value="${data.elr || ''}" data-field="elr">
+      </div>
+      <div class="mini-field">
+        <div class="mini-label">MTD Avg Hrs / RO</div>
+        <input class="mini-input" type="number" placeholder="e.g. 2.4" step="0.1" value="${data.hpro || ''}" data-field="hpro">
+      </div>
+      <div class="mini-field">
+        <div class="mini-label">Today's Appointments</div>
+        <input class="mini-input" type="number" placeholder="e.g. 12" value="${data.appts || ''}" data-field="appts">
+      </div>
+      <div class="mini-field">
+        <div class="mini-label">Survey Score (/1000)</div>
+        <input class="mini-input" type="number" placeholder="e.g. 860" step="1" min="0" max="1000" value="${data.csi || ''}" data-field="csi">
+      </div>
+    </div>
+  `;
+  document.getElementById('advisor-blocks').appendChild(block);
+}
+
+function removeAdvisor(id) {
+  const block = document.querySelector(`.advisor-block[data-id="${id}"]`);
+  if (block) block.remove();
+}
+
+// ── Drawer ─────────────────────────────────────────────────────
+function openDrawer() {
+  document.getElementById('in-store-csi').value    = state.storeCsi    ?? '';
+  document.getElementById('in-national-avg').value = state.nationalAvg ?? '';
+  document.getElementById('in-regional-avg').value = state.regionalAvg ?? '';
+  const blocksEl = document.getElementById('advisor-blocks');
+  blocksEl.innerHTML = '';
+  advisorCount = 0;
+  state.advisors.forEach(a => addAdvisor(a));
+  if (state.advisors.length === 0) {
+    addAdvisor();
+    addAdvisor();
+    addAdvisor();
+  }
+  document.getElementById('editOverlay').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('editOverlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('editOverlay')) closeDrawer();
+}
+
+// ── Save ───────────────────────────────────────────────────────
+function saveData() {
+  const csiVal     = parseInt(document.getElementById('in-store-csi').value);
+  const natVal     = parseInt(document.getElementById('in-national-avg').value);
+  const regVal     = parseInt(document.getElementById('in-regional-avg').value);
+  state.storeCsi    = isNaN(csiVal) ? null : csiVal;
+  state.nationalAvg = isNaN(natVal) ? null : natVal;
+  state.regionalAvg = isNaN(regVal) ? null : regVal;
+
+  const blocks = document.querySelectorAll('.advisor-block');
+  state.advisors = Array.from(blocks).map(block => {
+    const get = f => block.querySelector(`[data-field="${f}"]`).value.trim();
+    return {
+      name:      get('name') || 'Unnamed',
+      sales:     parseFloat(get('sales'))     || 0,
+      discounts: parseFloat(get('discounts')) || 0,
+      elr:       parseFloat(get('elr'))       || 0,
+      hpro:      parseFloat(get('hpro'))      || 0,
+      appts:     parseInt(get('appts'))       || 0,
+      csi:       parseInt(get('csi'))         || null,
+    };
+  }).filter(a => a.name !== 'Unnamed' || a.sales || a.appts);
+
+  closeDrawer();
+  // Capture rank inputs into state too
+  const natRankEl = document.getElementById('bench-national-rank');
+  const regRankEl = document.getElementById('bench-regional-rank');
+  if (natRankEl) state.nationalRank = natRankEl.value.trim();
+  if (regRankEl) state.regionalRank = regRankEl.value.trim();
+  renderDashboard();
+  showToast('Dashboard updated ✓');
+}
+
+// ── Render ─────────────────────────────────────────────────────
+function renderDashboard() {
+  const { storeCsi, nationalAvg, regionalAvg, advisors } = state;
+
+  // ── Strip totals
+  const totalAppts = advisors.reduce((s, a) => s + a.appts, 0);
+  const totalSales = advisors.reduce((s, a) => s + a.sales, 0);
+  const totalDisc  = advisors.reduce((s, a) => s + a.discounts, 0);
+  const avgElr     = advisors.length ? (advisors.reduce((s, a) => s + a.elr, 0) / advisors.length) : 0;
+  const avgHpro    = advisors.length ? (advisors.reduce((s, a) => s + a.hpro, 0) / advisors.length) : 0;
+
+  // Survey score color helper (1000-pt scale; green = at/above national avg, amber = close, red = below)
+  function surveyColor(score, nat) {
+    if (score == null) return 'var(--accent)';
+    const threshold = nat || 800;
+    if (score >= threshold)         return 'var(--green)';
+    if (score >= threshold - 50)    return 'var(--amber)';
+    return 'var(--red)';
+  }
+  function surveyPillClass(score, nat) {
+    if (score == null) return '';
+    const threshold = nat || 800;
+    if (score >= threshold)       return 'high';
+    if (score >= threshold - 50)  return 'mid';
+    return 'low';
+  }
+
+  // ── Top strip
+  document.getElementById('s-store-csi').textContent   = storeCsi != null ? storeCsi.toLocaleString() : '—';
+  document.getElementById('s-total-appts').textContent  = totalAppts || '—';
+  document.getElementById('s-total-sales').textContent  = totalSales ? '$' + totalSales.toLocaleString() : '—';
+  document.getElementById('s-avg-elr').textContent      = avgElr ? '$' + avgElr.toFixed(0) : '—';
+  document.getElementById('s-total-disc').textContent   = totalDisc ? '$' + totalDisc.toLocaleString() : '—';
+  document.getElementById('s-avg-hpro').textContent     = avgHpro ? avgHpro.toFixed(1) : '—';
+
+  // ── Store survey score + bar
+  const csiDisp = document.getElementById('csi-display');
+  const csiBar  = document.getElementById('csi-bar');
+  if (storeCsi != null) {
+    csiDisp.textContent      = storeCsi.toLocaleString();
+    const color              = surveyColor(storeCsi, nationalAvg);
+    csiDisp.style.color      = color;
+    csiBar.style.width       = (storeCsi / 1000 * 100).toFixed(1) + '%';
+    csiBar.style.background  = color;
+  } else {
+    csiDisp.textContent  = '—';
+    csiBar.style.width   = '0%';
+  }
+
+  // ── Benchmark displays
+  const natDisp = document.getElementById('bench-national-display');
+  const regDisp = document.getElementById('bench-regional-display');
+  natDisp.textContent = nationalAvg != null ? nationalAvg.toLocaleString() : '—';
+  regDisp.textContent = regionalAvg != null ? regionalAvg.toLocaleString() : '—';
+
+  // Color benchmarks relative to store score
+  if (storeCsi != null && nationalAvg != null) {
+    natDisp.style.color = storeCsi >= nationalAvg ? 'var(--green)' : 'var(--red)';
+  } else {
+    natDisp.style.color = 'var(--ink2)';
+  }
+  if (storeCsi != null && regionalAvg != null) {
+    regDisp.style.color = storeCsi >= regionalAvg ? 'var(--green)' : 'var(--red)';
+  } else {
+    regDisp.style.color = 'var(--ink2)';
+  }
+
+  // ── Advisor survey breakdown panel
+  const surveyContainer = document.getElementById('csi-advisor-rows');
+  if (advisors.length === 0) {
+    surveyContainer.innerHTML = '<div class="empty-note">Enter today\'s data to see advisor survey scores.</div>';
+  } else {
+    surveyContainer.innerHTML = '';
+    const sorted = [...advisors].sort((a, b) => (b.csi || 0) - (a.csi || 0));
+    sorted.forEach(adv => {
+      const score    = adv.csi;
+      const scoreStr = score != null ? score.toLocaleString() : '—';
+      const pct      = score != null ? (score / 1000 * 100).toFixed(1) : 0;
+      const natPct   = nationalAvg != null ? (nationalAvg / 1000 * 100).toFixed(1) : null;
+      const regPct   = regionalAvg != null ? (regionalAvg / 1000 * 100).toFixed(1) : null;
+      const color    = surveyColor(score, nationalAvg);
+      const row      = document.createElement('div');
+      row.style.cssText = 'display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border);';
+
+      // Benchmark tick marks on the bar
+      const natTick = natPct ? `<div style="position:absolute; left:${natPct}%; top:-3px; width:2px; height:11px; background:var(--accent); border-radius:1px; opacity:0.5;" title="National avg"></div>` : '';
+      const regTick = regPct ? `<div style="position:absolute; left:${regPct}%; top:-3px; width:2px; height:11px; background:var(--amber); border-radius:1px; opacity:0.5;" title="Regional avg"></div>` : '';
+
+      row.innerHTML = `
+        <div style="width:28px; height:28px; border-radius:50%; background:#f0eeea; color:var(--ink2); font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0;">${initials(adv.name)}</div>
+        <div style="flex:1;">
+          <div style="font-size:12px; font-weight:600; color:var(--ink2); margin-bottom:5px;">${adv.name}</div>
+          <div style="height:5px; background:var(--border); border-radius:99px; overflow:visible; position:relative;">
+            <div style="height:100%; width:${pct}%; background:${color}; border-radius:99px; transition:width 0.8s ease;"></div>
+            ${natTick}${regTick}
+          </div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600; color:${color}; min-width:48px; text-align:right;">${scoreStr}</div>
+      `;
+      surveyContainer.appendChild(row);
+    });
+    const last = surveyContainer.lastChild;
+    if (last) last.style.borderBottom = 'none';
+
+    // Legend for ticks
+    if (nationalAvg != null || regionalAvg != null) {
+      const legend = document.createElement('div');
+      legend.style.cssText = 'display:flex; gap:14px; padding:8px 18px 10px; border-top:1px solid var(--border);';
+      if (nationalAvg != null) legend.innerHTML += `<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--ink3);"><div style="width:10px;height:2px;background:var(--accent);border-radius:1px;opacity:0.6;"></div> National avg</div>`;
+      if (regionalAvg != null) legend.innerHTML += `<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--ink3);"><div style="width:10px;height:2px;background:var(--amber);border-radius:1px;opacity:0.6;"></div> Regional avg</div>`;
+      surveyContainer.appendChild(legend);
+    }
+  }
+
+  // ── Leaderboard
+  renderLeaderboard(advisors, nationalAvg);
+
+  // ── Appointment grid
+  const apptGrid = document.getElementById('appt-grid');
+  if (advisors.length === 0) {
+    apptGrid.innerHTML = '<div class="empty-note" style="grid-column:1/-1;">Enter today\'s data to see appointment counts.</div>';
+  } else {
+    const maxAppts = Math.max(...advisors.map(a => a.appts), 1);
+    apptGrid.innerHTML = advisors.map(adv => `
+      <div class="appt-card">
+        <div class="appt-adv">${adv.name}</div>
+        <div class="appt-count">${adv.appts}</div>
+        <div class="appt-meta">Appointments today</div>
+        <div class="appt-bar-track">
+          <div class="appt-bar-fill" style="width:${Math.round((adv.appts / maxAppts) * 100)}%"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+// ── Active leaderboard tab + auto-cycle ─────────────────────────
+const TAB_ORDER = ['sales', 'discounts', 'elr', 'hpro', 'survey'];
+let activeTab = 'sales';
+let cycleTimer = null;
+let cyclePausedUntil = 0;
+
+function switchTab(tab, fromCycle = false) {
+  activeTab = tab;
+  document.querySelectorAll('.metric-tab').forEach(el => el.classList.remove('active'));
+  const tabEl = document.getElementById('tab-' + tab);
+  if (tabEl) tabEl.classList.add('active');
+  renderLeaderboard(state.advisors, state.nationalAvg);
+
+  // A human clicked — pause the auto-cycle briefly so it doesn't yank away
+  if (!fromCycle) {
+    cyclePausedUntil = Date.now() + 25000; // 25s grace period
+  }
+}
+
+function startTabCycle() {
+  if (TAB_CYCLE_SECONDS <= 0) {
+    // Cycling off — hide the progress bar under tabs
+    document.documentElement.style.setProperty('--cycle-dur', '0s');
+    document.querySelectorAll('.metric-tab').forEach(el => el.classList.add('no-cycle'));
+    return;
+  }
+  // Match the progress-bar animation to the configured interval
+  document.documentElement.style.setProperty('--cycle-dur', TAB_CYCLE_SECONDS + 's');
+  if (cycleTimer) clearInterval(cycleTimer);
+  cycleTimer = setInterval(() => {
+    // Respect the pause window after a manual click
+    if (Date.now() < cyclePausedUntil) return;
+    // Only cycle if there's data to show
+    if (!state.advisors || state.advisors.length === 0) return;
+    const idx = TAB_ORDER.indexOf(activeTab);
+    const next = TAB_ORDER[(idx + 1) % TAB_ORDER.length];
+    switchTab(next, true);
+  }, TAB_CYCLE_SECONDS * 1000);
+}
+
+// ── Leaderboard render ─────────────────────────────────────────
+function renderLeaderboard(advisors, nationalAvg) {
+  const body    = document.getElementById('leaderboard-body');
+  const totalsEl = document.getElementById('leaderboard-totals');
+
+  if (!advisors || advisors.length === 0) {
+    body.innerHTML = '<div class="empty-note">No data yet — click "Enter Today\'s Data" to get started.</div>';
+    totalsEl.style.display = 'none';
+    return;
+  }
+
+  const tab = activeTab;
+
+  // Config per tab
+  const configs = {
+    sales:     { key: 'sales',     label: 'MTD Sales',      fmt: v => '$' + v.toLocaleString(),      barColor: '#1a3a8f', higherBetter: true },
+    discounts: { key: 'discounts', label: 'MTD Discounts',  fmt: v => '$' + v.toLocaleString(),      barColor: '#7a5a00', higherBetter: false },
+    elr:       { key: 'elr',       label: 'ELR',            fmt: v => '$' + v.toFixed(0),            barColor: '#1a6e3c', higherBetter: true },
+    hpro:      { key: 'hpro',      label: 'Hrs / RO',       fmt: v => v.toFixed(1) + ' hrs',         barColor: '#1a3a8f', higherBetter: true },
+    survey:    { key: 'csi',       label: 'Survey Score',   fmt: v => v != null ? v.toLocaleString() : '—', barColor: '#1a6e3c', higherBetter: true },
+  };
+
+  const cfg = configs[tab];
+  const getValue = a => {
+    const v = a[cfg.key];
+    return (v == null || isNaN(v)) ? 0 : v;
+  };
+
+  const sorted = [...advisors].sort((a, b) =>
+    cfg.higherBetter ? getValue(b) - getValue(a) : getValue(a) - getValue(b)
+  );
+
+  const maxVal  = Math.max(...sorted.map(getValue), 1);
+  const leader  = getValue(sorted[0]);
+
+  // rank avatar class
+  const rankClass = i => i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+  const rankLabel = i => i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
+
+  // Bar colors per rank
+  const barColors = ['#1a3a8f', '#2a5abf', '#3a7adf', '#5a8aaf', '#8a9aaf'];
+
+  body.innerHTML = '';
+  sorted.forEach((adv, i) => {
+    const val     = getValue(adv);
+    const rawVal  = adv[cfg.key];
+    const pct     = maxVal > 0 ? (val / maxVal * 100).toFixed(1) : 0;
+    const diff    = val - leader;
+    const isLeader = i === 0;
+    const fmtVal  = rawVal != null && rawVal !== 0 ? cfg.fmt(rawVal) : '—';
+
+    // Delta vs leader
+    let deltaHtml = '';
+    if (isLeader) {
+      deltaHtml = `<span class="lb-delta lead">Leader</span>`;
+    } else {
+      const diffStr = cfg.key === 'sales' || cfg.key === 'discounts'
+        ? '-$' + Math.abs(diff).toLocaleString()
+        : cfg.key === 'elr' ? '-$' + Math.abs(diff).toFixed(0)
+        : cfg.key === 'hpro' ? '-' + Math.abs(diff).toFixed(1)
+        : cfg.key === 'csi' ? '-' + Math.abs(diff).toLocaleString()
+        : '';
+      deltaHtml = `<span class="lb-delta trail">${diffStr}</span>`;
+    }
+
+    // Value color
+    let valColor = 'var(--ink)';
+    if (tab === 'discounts') {
+      valColor = val > 5000 ? 'var(--red)' : val > 2000 ? 'var(--amber)' : 'var(--green)';
+    } else if (tab === 'elr') {
+      valColor = val >= 154 ? 'var(--green)' : val >= 140 ? 'var(--ink)' : 'var(--amber)';
+    } else if (tab === 'hpro') {
+      valColor = val >= 2.8 ? 'var(--green)' : val >= 2.3 ? 'var(--ink)' : 'var(--amber)';
+    } else if (tab === 'survey') {
+      const nat = nationalAvg || 800;
+      valColor = val >= nat ? 'var(--green)' : val >= nat - 50 ? 'var(--amber)' : 'var(--red)';
+    } else {
+      valColor = isLeader ? 'var(--accent)' : 'var(--ink)';
+    }
+
+    const barColor = barColors[Math.min(i, barColors.length - 1)];
+
+    const row = document.createElement('div');
+    row.className = 'lb-row';
+    row.innerHTML = `
+      <div class="lb-rank">${rankLabel(i)}</div>
+      <div class="lb-avatar ${rankClass(i)}">${initials(adv.name)}</div>
+      <div class="lb-info">
+        <div class="lb-name">${adv.name}</div>
+        <div class="lb-sub">${cfg.label}</div>
+      </div>
+      <div class="lb-bar-wrap">
+        <div class="lb-bar-track">
+          <div class="lb-bar-fill" style="width:${pct}%; background:${barColor};"></div>
+        </div>
+        <div class="lb-bar-label">
+          <span></span>
+          <span>${pct}% of leader</span>
+        </div>
+      </div>
+      <div class="lb-value" style="color:${valColor}">${fmtVal}</div>
+      ${deltaHtml}
+    `;
+    body.appendChild(row);
+  });
+
+  // Totals strip
+  const totalSales = advisors.reduce((s,a) => s + (a.sales||0), 0);
+  const totalDisc  = advisors.reduce((s,a) => s + (a.discounts||0), 0);
+  const avgElr     = advisors.length ? advisors.reduce((s,a) => s + (a.elr||0), 0) / advisors.length : 0;
+  const avgHpro    = advisors.length ? advisors.reduce((s,a) => s + (a.hpro||0), 0) / advisors.length : 0;
+
+  totalsEl.style.display = 'flex';
+  totalsEl.innerHTML = `
+    <div class="lb-totals-strip">
+      <div class="lb-total-item">
+        <div class="lb-total-label">MTD Team Sales</div>
+        <div class="lb-total-val" style="color:var(--accent)">$${totalSales.toLocaleString()}</div>
+      </div>
+      <div class="lb-total-item">
+        <div class="lb-total-label">MTD Discounts</div>
+        <div class="lb-total-val" style="color:var(--amber)">$${totalDisc.toLocaleString()}</div>
+      </div>
+      <div class="lb-total-item">
+        <div class="lb-total-label">Avg ELR</div>
+        <div class="lb-total-val">$${avgElr.toFixed(0)}</div>
+      </div>
+      <div class="lb-total-item">
+        <div class="lb-total-label">Avg Hrs / RO</div>
+        <div class="lb-total-val">${avgHpro.toFixed(1)}</div>
+      </div>
+      <div class="lb-total-item">
+        <div class="lb-total-label">Advisors</div>
+        <div class="lb-total-val">${advisors.length}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Helpers ────────────────────────────────────────────────────
+function initials(name) {
+  return name.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
+}
+
+function updateRankDisplay(type) {
+  const inputId   = type === 'national' ? 'bench-national-rank' : 'bench-regional-rank';
+  const displayId = type === 'national' ? 'bench-national-rank-display' : 'bench-regional-rank-display';
+  const val = document.getElementById(inputId).value.trim();
+  const el  = document.getElementById(displayId);
+  if (val) {
+    el.textContent = 'Rank ' + val;
+    // Color rank: if first number is 1-3 of total, green; else default
+    const parts = val.split('/');
+    if (parts.length === 2) {
+      const pos = parseInt(parts[0]);
+      const tot = parseInt(parts[1]);
+      if (!isNaN(pos) && !isNaN(tot)) {
+        const pct = pos / tot;
+        el.style.color = pct <= 0.25 ? 'var(--green)' : pct <= 0.5 ? 'var(--accent)' : 'var(--amber)';
+      }
+    }
+  } else {
+    el.textContent = '';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── Init ───────────────────────────────────────────────────────
+(function init() {
+  if (GOOGLE_SHEET_CSV_URL) {
+    // Sheet mode: show sync button + status, pull data, set timer
+    document.getElementById('syncBtn').style.display = '';
+    setSyncStatus('syncing');
+    loadFromSheet(false);
+
+    if (AUTO_REFRESH_SECONDS > 0) {
+      setInterval(() => loadFromSheet(true), AUTO_REFRESH_SECONDS * 1000);
+    }
+  } else {
+    // Manual mode
+    setSyncStatus('manual');
+    renderDashboard();
+  }
+  // Begin auto-rotating the leaderboard metric tabs (TV display)
+  startTabCycle();
+})();
+
+</script>
+
+
+</body></html>
